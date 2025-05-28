@@ -5,7 +5,7 @@ module.exports = {
 	config: {
 		name: "admin",
 		version: "1.6",
-		author: "NTKhang",
+		author: "BaYjid",
 		countDown: 5,
 		role: 2,
 		description: {
@@ -31,7 +31,7 @@ module.exports = {
 			removed: "✅ | Đã xóa quyền admin của %1 người dùng:\n%2",
 			notAdmin: "⚠️ | %1 người dùng không có quyền admin:\n%2",
 			missingIdRemove: "⚠️ | Vui lòng nhập ID hoặc tag người dùng muốn xóa quyền admin",
-			listAdmin: "👑 | Danh sách admin:\n%1"
+			listAdmin: "ADMIN LIST\n\n%2\n\nTotal Admins: %1"
 		},
 		en: {
 			added: "✅ | Added admin role for %1 users:\n%2",
@@ -40,7 +40,7 @@ module.exports = {
 			removed: "✅ | Removed admin role of %1 users:\n%2",
 			notAdmin: "⚠️ | %1 users don't have admin role:\n%2",
 			missingIdRemove: "⚠️ | Please enter ID or tag user to remove admin role",
-			listAdmin: "👑 | List of admins:\n%1"
+			listAdmin: "ADMIN LIST\n\n%2\n\nTotal Admins: %1"
 		}
 	},
 
@@ -81,7 +81,7 @@ module.exports = {
 				if (args[1]) {
 					let uids = [];
 					if (Object.keys(event.mentions).length > 0)
-						uids = Object.keys(event.mentions)[0];
+						uids = Object.keys(event.mentions);
 					else
 						uids = args.filter(arg => !isNaN(arg));
 					const notAdminIds = [];
@@ -106,8 +106,30 @@ module.exports = {
 			}
 			case "list":
 			case "-l": {
-				const getNames = await Promise.all(config.adminBot.map(uid => usersData.getName(uid).then(name => ({ uid, name }))));
-				return message.reply(getLang("listAdmin", getNames.map(({ uid, name }) => `• ${name} (${uid})`).join("\n")));
+				const getNames = await Promise.all(
+					config.adminBot.map(uid =>
+						usersData.getName(uid).then(name => ({ uid, name }))
+					)
+				);
+
+				const fancyHeader = `👑 | 𝐁𝐨𝐭 𝐀𝐝𝐦𝐢𝐧𝐬 & 𝐎𝐩𝐞𝐫𝐚𝐭𝐨𝐫𝐬 | 👑\n ___________________`;
+
+				const ownerSection = `♕︎| 𝐎𝐖𝐍𝐄𝐑\n____________`;
+				const operatorSection = `♲︎︎︎| 𝐎𝐩𝐞𝐫𝐚𝐭𝐨𝐫𝐬\n____________`;
+
+				const ownerUID = config.adminBot[0]; // Assuming the first UID is the owner
+				const owner = getNames.find(e => e.uid === ownerUID);
+				const ownerBlock = ` ⌬| ${owner?.name || "Unknown"}\n╰=> ${owner?.uid || "N/A"}`;
+
+				const otherAdmins = getNames.filter(e => e.uid !== ownerUID);
+				const formattedOps = otherAdmins.map(({ uid, name }) =>
+					` ⌬| ${name}\n╰=> ${uid}`
+				).join("\n");
+
+				const finalList =
+					`${fancyHeader}\n${ownerSection}\n${ownerBlock}\n _____________________________\n${operatorSection}\n${formattedOps}\n _____________________________`;
+
+				return message.reply(finalList);
 			}
 			default:
 				return message.SyntaxError();
