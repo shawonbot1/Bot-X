@@ -1,7 +1,7 @@
 {
   "facebookAccount": {
-    "email": "bossbayjid14@gmail.com",
-    "password": "your.dad.bayjid",
+    "shawonmusulli2024@gmail.com",
+    "password": "shawon1234",
     "2FASecret": "hxhjdjj",
     "i_user": "",
     "proxy": null,
@@ -13,21 +13,21 @@
   "checkApproval": true,
   "language": "en",
   "notesLanguage": "change to your language with ISO 639-1 code, available languages: vi (Vietnamese), en (English)",
-  "nickNameBot": "𝐗𝐀𝐒𝐒 𝐁𝐎𝐓__/:;)🦈🫀",
-  "prefix": ".",
+  "nickNameBot": "𝗦𝗛𝗔𝗪𝗢𝗡 𝗫 𝗕𝗢𝗧",
+  "prefix": "£",
   "adminOnly": {
     "enable": false,
     "ignoreCommand": []
   },
   "adminBot": [
-    "100005193854879",
-    "100085332887575",
-    "61574008061899",
-    "61557614587739",
-    "61573734832201",
-    "61556952104072",
-    "100076178593063",
-    "100044327656712"
+    "100091984105501",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
   ],
   "handlerReaction": {
     "enable": true,
